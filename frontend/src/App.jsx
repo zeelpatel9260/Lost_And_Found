@@ -1,12 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import UserAuth from './components/UserAuth'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    </>
+    <div className="flex 
+        justify-center 
+        items-center
+        w-screen
+        h-screen">
+      <UserAuth></UserAuth>
+    </div>
   )
 }
 
