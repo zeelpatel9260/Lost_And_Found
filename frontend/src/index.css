@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    --navbar: #F6F1E4;
+    --btn-black: #25201B;
+    --orange: #C2872E;
+    --orange-hover: #A9701E;
+    --green: #2F6F62;
+    --green-hover: #255A4F;
+    --text-1: #25201B;
+    --pure-white: #FFFFFF;
+    -shaded-white: #E8ECF4;
+    --border-1: #25201B;
+    --input-1: #FAF7F0;
+    --bg: #FAF7F0;
+    --dark-green: #247061;
+  }
   * {
     margin: 0;
     padding: 0;
@@ -18,3 +33,4 @@
     width: 100%;
   }
 }
+
