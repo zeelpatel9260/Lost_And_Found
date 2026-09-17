@@ -11,20 +11,20 @@ export default function Dashboard() {
         </h4>
       </div>
 
-      <div className="absolute icon w-full h-[50px] top-[140px] left-[100px]">
-        <div class="absolute w-28 h-16 rounded-md shadow-sm bg-[#F1D9B3] rotate-[-30deg]">
-          <span class="absolute w-3 h-3 rounded-full bg-[#F6F1E4] border border-[#25201B]/10"></span>
-          <div class="h-full flex items-center justify-center border-l-2 border-dashed border-[#C2872E]">
-            <span class="text-xs font-semibold tracking-wide text-[#8A4B12]">
+      <div className="absolute icon w-full h-[50px] top-[140px] left-[130px]">
+        <div className="absolute w-28 h-16 rounded-md shadow-sm bg-[#F1D9B3] rotate-[-30deg]">
+          <span className="absolute w-3 h-3 rounded-full bg-[#F6F1E4] border border-[#25201B]/10"></span>
+          <div className="h-full flex items-center justify-center border-l-2 border-dashed border-[#C2872E]">
+            <span className="text-xs font-semibold tracking-wide text-[#8A4B12]">
               LOST
             </span>
           </div>
         </div>
 
-        <div class="absolute w-28 h-16 rounded-md shadow-sm bg-[#CFE3DD] rotate-[-30deg] right-[330px]">
-          <span class="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#F6F1E4] border border-[#25201B]/10"></span>
-          <div class="h-full flex items-center justify-center border-l-2 border-dashed border-[#2F6F62]">
-            <span class="text-xs font-semibold tracking-wide text-[#1F4B41]">
+        <div className="absolute w-28 h-16 rounded-md shadow-sm bg-[#CFE3DD] rotate-[-25deg] right-[330px]">
+          <span className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#F6F1E4] border border-[#25201B]/10"></span>
+          <div className="h-full flex items-center justify-center border-l-2 border-dashed border-[#2F6F62]">
+            <span className="text-xs font-semibold tracking-wide text-[#1F4B41]">
               FOUND
             </span>
           </div>
@@ -33,7 +33,6 @@ export default function Dashboard() {
 
       <div className="lost-found-container max-w-[800px] h-[230px] mx-auto flex justify-between items-center gap-10 p-4 mb-10">
         <div className="left bg-(--pure-white) max-w-[50%] w-[50%] p-2.5 h-full flex flex-col items-start rounded-2xl">
-
           <h3 className="text-(--btn-black) self-center font-bold text-xl mt-2.5">
             Report Lost Item
           </h3>
@@ -45,7 +44,6 @@ export default function Dashboard() {
           </button>
         </div>
         <div className="p-2.5 right bg-(--pure-white) max-w-[50%] w-[50%] h-full flex flex-col items-start rounded-2xl">
-
           <h3 className="text-(--btn-black) self-center font-bold text-xl mt-2.5">
             Report Found Item
           </h3>

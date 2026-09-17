@@ -1,4 +1,6 @@
-export default function Navbar() {
+export default function Navbar({
+  setUserAuth
+}) {
   return (
     <>
       <div className="bg-(--navbar)/90 text-(--text-1) nav-container max-w-full w-full h-[70px] fixed z-2 top-0 border-b-1 border-(--navbar-border)/10">
@@ -8,12 +10,16 @@ export default function Navbar() {
           </div>
           <ul className="menus flex gap-4 cursor-pointer">
             <li className="h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-95 w-[90px]">
-              <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full">
+              <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full" onClick={() => {
+                setUserAuth({state: true, page: 'login'})
+              }}>
                 Log In
               </button>
             </li>
             <li className="h-[40px] text-(--pure-white) bg-(--btn-black) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in active:scale-95 w-[90px]overflow-hidden">
-              <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full">
+              <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full" onClick={() => {
+                setUserAuth({state: true, page: 'signup'})
+              }}>
                 Sign Up
               </button>
             </li>
