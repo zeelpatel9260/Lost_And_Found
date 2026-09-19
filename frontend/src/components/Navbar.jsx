@@ -3,7 +3,7 @@ export default function Navbar({
 }) {
   return (
     <>
-      <div className="bg-(--navbar)/90 text-(--text-1) nav-container max-w-full w-full h-[70px] fixed z-2 top-0 border-b-1 border-(--navbar-border)/10">
+      <div className="bg-(--navbar)/90 text-(--text-1) nav-container max-w-full w-full h-[70px] fixed z-2 top-0 border-b-1 border-(--border-1)/20">
         <nav className="nav max-w-[1600px] h-full p-2 px-4 mx-auto flex justify-between items-center">
           <div className="logo tracking-wider text-2xl font-bold">
             Lost<span className="text-(--orange)">&</span>Found

@@ -269,7 +269,7 @@ export default function AdminAuth({
               <UserIcon size={24} className="text-(--green)" />
               <input
                 type="text"
-                placeholder="Name"
+                placeholder="Organization Name"
                 name="name"
                 id="name"
                 value={signupData.name}
