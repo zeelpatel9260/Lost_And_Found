@@ -1,4 +1,5 @@
 import Search from "../components/Search";
+import UserAuth from "../components/UserAuth";
 
 export default function Dashboard() {
   return (

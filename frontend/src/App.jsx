@@ -1,9 +1,9 @@
+import UserAuth from './components/UserAuth'
+import AdminAuth from "./components/AdminAuth";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import { useState } from "react";
-import AdminAuth from "./components/AdminAuth";
-import UserAuth from "./components/UserAuth";
 
 function App() {
   const [userAuth, setUserAuth] = useState({
@@ -25,6 +25,18 @@ function App() {
       )}
       <Navbar setUserAuth={setUserAuth} />
       <Dashboard />
+      {/* <div
+        className="
+        bg-(--bg)
+        flex 
+        justify-center 
+        items-center
+        w-screen
+        h-screen"
+      >
+        <UserAuth></UserAuth>
+        <AdminAuth></AdminAuth>
+      </div> */}
     </>
   );
 }
