@@ -31,12 +31,12 @@ class PostItem(BaseModel):
 
         try:
             parsed_date = datetime.strptime(
-                value, "%d-%m-%Y"
+                value, "%m/%d/%Y"
             ).date()
 
         except ValueError:
             raise ValueError(
-                "Date must be in DD-MM-YYYY format"
+                "Date must be in MM/DD/YYYY format"
             )
 
         if parsed_date > date.today():

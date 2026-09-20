@@ -24,7 +24,7 @@ def admin_signup(admin: AdminSignup, conn=Depends(db_connect)):
         query = """SELECT "Name" FROM "Organization" WHERE "Email" = %s"""
         cur.execute(query, (admin.email,))
         result = cur.fetchone()
-        if result["Name"]:
+        if result:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT, detail=f"The user already exists."
             )
@@ -69,12 +69,12 @@ def user_signup(user: UserSignup, conn=Depends(db_connect)):
         query = """SELECT "Name" FROM "Organization" WHERE "Email" = %s"""
         cur.execute(query, (user.email,))
         result = cur.fetchone()
-        if result["Name"]:
+        if result:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT, detail=f"The user already exists."
             )
 
-        tupl = (o_id, user.email, user.phone_number, user.password)
+        tupl = (o_id, user.email, user.phone_number, hash_password(user.password))
         query = """INSERT INTO "User" ("O_id", "Email", "Phone_Number", "Password") 
             VALUES (%s, %s, %s, %s);"""
         cur.execute(query, tupl)
