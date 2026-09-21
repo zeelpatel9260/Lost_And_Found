@@ -7,7 +7,6 @@ load_dotenv(dotenv_path="./backend/.env")
 jwt_algorithm = os.getenv("JWT_ALGORITHM")
 secret_key = os.getenv("JWT_SECRET_KEY")
 
-
 def create_jwt(payload: dict):
     to_encode = payload.copy()
     exp = datetime.now(timezone.utc) + timedelta(minutes=2)
@@ -21,7 +20,6 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 
 oauth_scheme_user = OAuth2PasswordBearer(tokenUrl="/user_login")
-
 
 def get_u_id(token=Depends(oauth_scheme_user)):
     try:
