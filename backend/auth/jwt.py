@@ -3,13 +3,13 @@ import os
 from datetime import datetime, timedelta, timezone
 import jwt
 
-load_dotenv(dotenv_path="./backend/.env")
+load_dotenv('./backend/.env')
 jwt_algorithm = os.getenv("JWT_ALGORITHM")
 secret_key = os.getenv("JWT_SECRET_KEY")
 
 def create_jwt(payload: dict):
     to_encode = payload.copy()
-    exp = datetime.now(timezone.utc) + timedelta(minutes=2)
+    exp = datetime.now(timezone.utc) + timedelta(minutes=10)
     to_encode.update({"exp": exp})
 
     encoded_jwt = jwt.encode(to_encode, secret_key, jwt_algorithm)
@@ -21,20 +21,58 @@ from fastapi import Depends, HTTPException, status
 
 oauth_scheme_user = OAuth2PasswordBearer(tokenUrl="/user_login")
 
+# def get_u_id(token=Depends(oauth_scheme_user)):
+#     try:
+#         payload = jwt.decode(token, secret_key, algorithms=[jwt_algorithm])
+#         u_id = payload.get("u_id")
+#         if u_id:
+#             return u_id
+#         else:
+#             raise HTTPException(
+#                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid JWT Token."
+#             )
+#     except jwt.PyJWTError:
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail="Session has expired or token is invalid.",
+#         )
+
 def get_u_id(token=Depends(oauth_scheme_user)):
     try:
-        payload = jwt.decode(token, secret_key, algorithms=[jwt_algorithm])
+        header = jwt.get_unverified_header(token)
+        print("JWT HEADER:", header)
+
+        print("ALLOWED ALGORITHM:", jwt_algorithm)
+
+        payload = jwt.decode(
+            token,
+            secret_key,
+            algorithms=[jwt_algorithm]
+        )
+
+        print("PAYLOAD:", payload)
+
         u_id = payload.get("u_id")
-        if u_id:
-            return u_id
-        else:
+
+        if not u_id:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid JWT Token."
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="u_id missing from JWT"
             )
-    except jwt.PyJWTError:
+
+        return u_id
+
+    except jwt.ExpiredSignatureError:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Session has expired or token is invalid.",
+            status_code=401,
+            detail="JWT token has expired"
+        )
+
+    except jwt.InvalidTokenError as e:
+        print("JWT ERROR:", e)
+        raise HTTPException(
+            status_code=401,
+            detail=f"Invalid JWT token: {str(e)}"
         )
 
 

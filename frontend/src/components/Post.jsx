@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CloudArrowUpIcon } from "@phosphor-icons/react";
 export default function Post() {
-  const[activePost, setActivePost] = useState("lost");
+  const [activePost, setActivePost] = useState("lost");
 
   const [lostItemDetails, setLostItemDetails] = useState({
     item_name: "",
@@ -19,6 +19,13 @@ export default function Post() {
     location: "",
     image: null,
   });
+
+  const [lostday, lostmonth, lostyear] = lostItemDetails.date.split("-");
+  const lostDate = `${lostyear}-${lostmonth}-${lostday}`;
+
+  const [foundday, foundmonth, foundyear] = foundItemDetails.date.split("-");
+  const foundDate = `${foundyear}-${foundmonth}-${foundday}`;
+
 
   function onLostChange(event) {
     const { name, value, type, files } = event.target;
@@ -43,19 +50,19 @@ export default function Post() {
 
     activePost === "lost"
       ? setLostItemDetails({
-          item_name: "",
-          description: "",
-          date: "",
-          location: "",
-          image: null,
-        })
+        item_name: "",
+        description: "",
+        date: "",
+        location: "",
+        image: null,
+      })
       : setFoundItemDetails({
-          item_name: "",
-          description: "",
-          date: "",
-          location: "",
-          image: null,
-        });
+        item_name: "",
+        description: "",
+        date: "",
+        location: "",
+        image: null,
+      });
   }
   const navigate_post = useNavigate();
 
@@ -70,11 +77,10 @@ export default function Post() {
               navigate_post("/post/report_lost_items");
             }}
             className={`w-1/2 rounded-tl-lg transition-colors font-bold
-                ${
-                  activePost === "lost"
-                    ? "bg-(--green) text-(--pure-white) hover:bg-(--green-hover)"
-                    : "bg-(--pure-white) text-(--text-1)"
-                } cursor-pointer`}
+                ${activePost === "lost"
+                ? "bg-(--green) text-(--pure-white) hover:bg-(--green-hover)"
+                : "bg-(--pure-white) text-(--text-1)"
+              } cursor-pointer`}
           >
             Post Lost Item
           </button>
@@ -86,11 +92,10 @@ export default function Post() {
               navigate_post("/post/report_found_items");
             }}
             className={`w-1/2 rounded-tr-lg font-bold transition-colors
-                ${
-                  activePost === "found"
-                    ? "bg-(--orange) text-(--pure-white) hover:bg-(--orange-hover)"
-                    : "bg-(--pure-white) text-(--text-1)"
-                } cursor-pointer`}
+                ${activePost === "found"
+                ? "bg-(--orange) text-(--pure-white) hover:bg-(--orange-hover)"
+                : "bg-(--pure-white) text-(--text-1)"
+              } cursor-pointer`}
           >
             Post Found Item
           </button>
@@ -136,7 +141,6 @@ export default function Post() {
                 id="date"
                 value={lostItemDetails.date}
                 onChange={onLostChange}
-                placeholder="dd-mm-yyyy"
                 className="w-full px-2 py-2 focus:outline-none focus:ring-0 border rounded-lg"
               />
             </div>
