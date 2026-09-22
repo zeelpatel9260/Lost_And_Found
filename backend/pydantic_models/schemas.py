@@ -49,3 +49,14 @@ class PostItem(BaseModel):
     location: str
     image: Optional[str] = None
     
+class UserDetails(BaseModel):
+    Name: str
+    Phone_Number: str
+    Email: str
+    
+class ItemDetails(BaseModel):
+    item_name: str
+    description: str
+    date: str
+    location: str
+    image: Optional[str] = None
