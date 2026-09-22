@@ -47,7 +47,7 @@ class PostItem(BaseModel):
     #     return value
     
     location: str
-    image: Optional[str] = None
+    image: Optional[str] = ""
     
 class UserDetails(BaseModel):
     Name: str

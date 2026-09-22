@@ -72,8 +72,8 @@ function App() {
 
         <Routes>
           <Route path={"/dashboard"} element={<Dashboard isLog={isLog} setUserAuth={setUserAuth} />}></Route>
-          <Route path={"/post/report_lost_items"} element={<Post setActivePost={setActivePost} activePost='lost'/>}></Route>
-          <Route path={"/post/report_found_items"} element={<Post setActivePost={setActivePost} activePost='found'/>}></Route>
+          <Route path={"/post/report_lost_items"} element={<Post setActivePost={setActivePost} activePost='lost' loading={loading} setLoading={setLoading} setAlert={setAlert}/>}></Route>
+          <Route path={"/post/report_found_items"} element={<Post setActivePost={setActivePost} activePost='found' loading={loading} setLoading={setLoading} setAlert={setAlert}/>}></Route>
           <Route path={"/profile"} element={<Profile />}></Route>
           <Route path={"*"} element={<PageNotFound />}></Route>
         </Routes>
