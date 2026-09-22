@@ -36,12 +36,12 @@ class PostItem(BaseModel):
 
         except ValueError:
             raise ValueError(
-                "Date must be in MM/DD/YYYY format"
+                "Date must be in MM/DD/YYYY format."
             )
 
         if parsed_date > date.today():
             raise ValueError(
-                "Found date cannot be in the future"
+                "Found date cannot be in the future."
             )
 
         return value

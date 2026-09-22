@@ -10,16 +10,21 @@ import {
   ShieldCheckIcon,
   ArrowRightIcon,
 } from "@phosphor-icons/react";
+import { userLogin, userSignup } from "../api/AuthApi";
 
 export default function UserAuth({
   setUserAuth,
   userAuth,
   adminAuth,
   setAdminAuth,
+  setAlert,
+  alert,
+  loading,
+  setLoading
 }) {
   const [signupData, setSignupData] = useState({
     name: "",
-    phone_no: "",
+    phone_number: "",
     email: "",
     code: "",
     password: "",
@@ -29,7 +34,6 @@ export default function UserAuth({
 
   const [loginData, setLoginData] = useState({
     email: "",
-    code: "",
     password: "",
   });
 
@@ -62,25 +66,51 @@ export default function UserAuth({
     }));
   }
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
+    if(userAuth.page === 'login') {
+      if(loginData.email === '' || loginData.password === '') {
+        setAlert({msg: 'All the details must be filled.', state: true})
+        return
+      }
+      try {
+        setLoading(true)
+        let response = await userLogin(loginData);
+        if(response) {
+          setAlert({msg: 'Login Successful.', state: true})
+          let token = response.access_token
+          document.cookie = `user_jwt=${token};path=/;`
+          setUserAuth({state: false, page: ''})
+        }
+        setLoading(false)
+      } catch(err) {
+        setAlert({msg: 'Login Failed. ' + String(err.message), state: true})
+      } finally {
+        setLoading(false)
+      }
 
-    if (userAuth.page === "login") {
-      setLoginData({
-        email: "",
-        code: "",
-        password: "",
-      });
-    } else {
-      setSignupData({
-        name: "",
-        phone_no: "",
-        email: "",
-        code: "",
-        password: "",
-        c_password: "",
-        otp: "",
-      });
+    } else if(userAuth.page === 'signup') {
+      if(signupData.email === '' || signupData.password === '' || signupData.c_password === '' || signupData.code === '' || signupData.name === '' || signupData.phone_number === '' || signupData.otp === '') {
+        setAlert({msg: 'All the details must be filled.', state: true})
+        return;
+      }
+      try {
+        if(signupData.password !== signupData.c_password) {
+          setAlert({ msg: "Passwords do not match.", state: true });
+          return;
+        }
+        setLoading(true)
+        let response = await userSignup(signupData);
+        if(response) {
+          setAlert({msg: 'Signup Successful.', state: true})
+          setUserAuth({state: true, page: 'login'})
+        }
+        setLoading(false)
+      } catch(err) {
+        setAlert({state: true, msg: 'Signup Failed. ' + String(err.message)})
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
@@ -296,7 +326,7 @@ export default function UserAuth({
               type="submit"
               className="
                 flex
-                flex-col
+                gap-6
                 items-center
                 justify-center
                 font-semibold
@@ -314,7 +344,7 @@ export default function UserAuth({
               "
               onClick={onSubmit}
             >
-              Login
+              {loading && <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>}<span>Login</span>
             </button>
 
             {/* Admin Login */}
@@ -374,9 +404,9 @@ export default function UserAuth({
               <input
                 type="tel"
                 placeholder="Phone No"
-                name="phone_no"
-                id="phone_no"
-                value={signupData.phone_no}
+                name="phone_number"
+                id="phone_number"
+                value={signupData.phone_number}
                 onChange={onSignupChange}
                 maxLength={10}
                 className="w-70 px-2 focus:outline-none focus:ring-0"
@@ -522,7 +552,7 @@ export default function UserAuth({
               type="submit"
               className="
                 flex
-                flex-col
+                gap-6
                 items-center
                 justify-center
                 font-semibold
@@ -540,7 +570,7 @@ export default function UserAuth({
               "
               onClick={onSubmit}
             >
-              Sign Up
+              {loading && <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>}<span>Sign Up</span>
             </button>
 
             {/* Admin Sign Up */}

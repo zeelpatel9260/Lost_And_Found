@@ -3,13 +3,15 @@ import AdminAuth from "./components/AdminAuth";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Post from "./components/Post";
 import Profile from "./components/Profile";
 import PageNotFound from "./components/PageNotFound";
+import Alert from "./components/Alert";
 
 function App() {
+  const [loading, setLoading] = useState(false)
   const [userAuth, setUserAuth] = useState({
     state: false,
     page: "signup",
@@ -18,9 +20,22 @@ function App() {
     state: false,
     page: "signup",
   });
+  const [alert, setAlert] = useState({
+    msg: '', state: false
+  })
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setAlert({ msg: "", state: false });
+    }, 4000);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [alert]);
 
   return (
     <>
+      { alert.state && <Alert msg={alert.msg}/> }
       <BrowserRouter>
         {!adminAuth.state && userAuth.state && (
           <UserAuth
@@ -28,6 +43,10 @@ function App() {
             userAuth={userAuth}
             setAdminAuth={setAdminAuth}
             adminAuth={adminAuth}
+            setAlert={setAlert}
+            alert={alert}
+            loading={loading}
+            setLoading={setLoading}
           />
         )}
         {adminAuth.state && !userAuth.state && (
@@ -36,6 +55,10 @@ function App() {
             userAuth={userAuth}
             setAdminAuth={setAdminAuth}
             adminAuth={adminAuth}
+            setAlert={setAlert}
+            alert={alert}
+            loading={loading}
+            setLoading={setLoading}
           />
         )}
         <Navbar setUserAuth={setUserAuth}/>
