@@ -6,7 +6,6 @@ from ..auth.jwt import get_u_id
 
 post_endpoints = APIRouter()
 
-
 @post_endpoints.post("/post_lost", status_code=status.HTTP_201_CREATED)
 def lostItem(item: PostItem, conn=Depends(db_connect), user_id=Depends(get_u_id)):
     cursor = None
