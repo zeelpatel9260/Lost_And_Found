@@ -21,58 +21,20 @@ from fastapi import Depends, HTTPException, status
 
 oauth_scheme_user = OAuth2PasswordBearer(tokenUrl="/user_login")
 
-# def get_u_id(token=Depends(oauth_scheme_user)):
-#     try:
-#         payload = jwt.decode(token, secret_key, algorithms=[jwt_algorithm])
-#         u_id = payload.get("u_id")
-#         if u_id:
-#             return u_id
-#         else:
-#             raise HTTPException(
-#                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid JWT Token."
-#             )
-#     except jwt.PyJWTError:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Session has expired or token is invalid.",
-#         )
-
 def get_u_id(token=Depends(oauth_scheme_user)):
     try:
-        header = jwt.get_unverified_header(token)
-        print("JWT HEADER:", header)
-
-        print("ALLOWED ALGORITHM:", jwt_algorithm)
-
-        payload = jwt.decode(
-            token,
-            secret_key,
-            algorithms=[jwt_algorithm]
-        )
-
-        print("PAYLOAD:", payload)
-
+        payload = jwt.decode(token, secret_key, algorithms=[jwt_algorithm])
         u_id = payload.get("u_id")
-
-        if not u_id:
+        if u_id:
+            return u_id
+        else:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="u_id missing from JWT"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Session has expired. Login again."
             )
-
-        return u_id
-
-    except jwt.ExpiredSignatureError:
+    except jwt.PyJWTError:
         raise HTTPException(
-            status_code=401,
-            detail="JWT token has expired"
-        )
-
-    except jwt.InvalidTokenError as e:
-        print("JWT ERROR:", e)
-        raise HTTPException(
-            status_code=401,
-            detail=f"Invalid JWT token: {str(e)}"
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Session has expired. Login again.",
         )
 
 
