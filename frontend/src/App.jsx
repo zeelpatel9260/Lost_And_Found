@@ -3,7 +3,7 @@ import AdminAuth from "./components/AdminAuth";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, act } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Post from "./components/Post";
 import Profile from "./components/Profile";
@@ -23,6 +23,11 @@ function App() {
   const [alert, setAlert] = useState({
     msg: '', state: false
   })
+
+  let tokenAvailable = document.cookie.split(';').find(cookie => cookie.startsWith('user_jwt='))?.split('=')[1]
+  const [isLog, setIsLog] = useState(tokenAvailable ? true : false)
+
+  const[activePost, setActivePost] = useState("lost");
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -47,6 +52,7 @@ function App() {
             alert={alert}
             loading={loading}
             setLoading={setLoading}
+            setIsLog={setIsLog}
           />
         )}
         {adminAuth.state && !userAuth.state && (
@@ -59,14 +65,15 @@ function App() {
             alert={alert}
             loading={loading}
             setLoading={setLoading}
+            setIsLog={setIsLog}
           />
         )}
-        <Navbar setUserAuth={setUserAuth}/>
+        <Navbar setUserAuth={setUserAuth} isLog={isLog} />
 
         <Routes>
-          <Route path={"/dashboard"} element={<Dashboard />}></Route>
-          <Route path={"/post/report_lost_items"} element={<Post />}></Route>
-          <Route path={"/post/report_found_items"} element={<Post />}></Route>
+          <Route path={"/dashboard"} element={<Dashboard isLog={isLog} setUserAuth={setUserAuth} />}></Route>
+          <Route path={"/post/report_lost_items"} element={<Post setActivePost={setActivePost} activePost='lost'/>}></Route>
+          <Route path={"/post/report_found_items"} element={<Post setActivePost={setActivePost} activePost='found'/>}></Route>
           <Route path={"/profile"} element={<Profile />}></Route>
           <Route path={"*"} element={<PageNotFound />}></Route>
         </Routes>

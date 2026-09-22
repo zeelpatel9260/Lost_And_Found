@@ -20,7 +20,8 @@ export default function UserAuth({
   setAlert,
   alert,
   loading,
-  setLoading
+  setLoading,
+  setIsLog
 }) {
   const [signupData, setSignupData] = useState({
     name: "",
@@ -81,6 +82,7 @@ export default function UserAuth({
           let token = response.access_token
           document.cookie = `user_jwt=${token};path=/;`
           setUserAuth({state: false, page: ''})
+          setIsLog(true)
         }
         setLoading(false)
       } catch(err) {

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CloudArrowUpIcon } from "@phosphor-icons/react";
-export default function Post() {
-  const[activePost, setActivePost] = useState("lost");
+export default function Post({setActivePost, activePost}) {
 
   const [lostItemDetails, setLostItemDetails] = useState({
     item_name: "",

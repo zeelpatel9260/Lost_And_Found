@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta, timezone
 import jwt
 
-load_dotenv(dotenv_path="./backend/.env")
+load_dotenv('./backend/.env')
 jwt_algorithm = os.getenv("JWT_ALGORITHM")
 secret_key = os.getenv("JWT_SECRET_KEY")
 

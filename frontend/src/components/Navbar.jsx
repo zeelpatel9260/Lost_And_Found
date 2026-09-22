@@ -1,7 +1,8 @@
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar({
-  setUserAuth
+  setUserAuth,
+  isLog
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,34 +21,34 @@ export default function Navbar({
                 Dashboard
               </button>
             </li>
-            <li className="h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-95" onClick={() => {
+            {isLog && <li className="h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-95" onClick={() => {
                 navigate('/post/report_lost_items')
               }}>
               <button className={`${location.pathname.includes('/post') ? 'text-(--orange)' : ''} cursor-pointer border-0 outline-0 py-1 px-3 w-full`}>
                 Post
               </button>
-            </li>
-            <li className="h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-95" onClick={() => {
+            </li>}
+            { !isLog && <li className="h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-95" onClick={() => {
                 setUserAuth({state: true, page: 'login'})
               }}>
               <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full">
                 Log In
               </button>
-            </li>
-            <li className={`h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-90`} onClick={() => {
+            </li>}
+            {isLog && <li className={`h-[40px] text-(--text-1) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in-out active:scale-90`} onClick={() => {
                 navigate('/profile')
               }}>
               <button className={`cursor-pointer border-0 outline-0 py-1 px-3 w-full ${location.pathname.includes('/profile') ? 'text-(--orange)' : ''}`}>
                 Profile
               </button>
-            </li>
-            <li className="h-[40px] text-(--pure-white) bg-(--btn-black) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in active:scale-95 w-[90px]overflow-hidden" onClick={() => {
+            </li>}
+            { !isLog && <li className="h-[40px] text-(--pure-white) bg-(--btn-black) font-bold rounded-lg flex justify-center items-center transition-all duration-150 ease-in active:scale-95 w-[90px]overflow-hidden" onClick={() => {
                 setUserAuth({state: true, page: 'signup'})
               }}>
               <button className="cursor-pointer border-0 outline-0 py-1 px-3 w-full transition-all duration-150 ease-in hover:opacity-90">
                 Sign Up
               </button>
-            </li>
+            </li>}
           </ul>
         </nav>
       </div>
